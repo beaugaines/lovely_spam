@@ -8,20 +8,17 @@ def meat_slideshow
 end
 
 uri = URI('http://aerial-valor-93012.appspot.com/challenge')
-challenge = JSON.parse(Net::HTTP.get(uri)) rescue "that ain't json"
+json_response = JSON.parse(Net::HTTP.get(uri)) rescue "that ain't json"
 
-token = challenge['token']
-sum = challenge['values'].inject(:+)
+token = json_response['token']
+sum = json_response['values'].inject(:+)
 
 success_uri = URI("http://aerial-valor-93012.appspot.com/challenge/#{token}/#{sum}")
-
-success_response = Net::HTTP.get(success_uri)
-
-secret_code = JSON.parse(success_response)['answer']
+success_response = JSON.parse(Net::HTTP.get(success_uri)) rescue "that is nae json"
 
 system 'clear'
 
-puts "#{"\n" * 10}#{secret_code.center(140)} :)"
+puts "#{"\n" * 10}#{success_response['answer'].center(140)} :)"
 sleep 4
 meat_slideshow
 
