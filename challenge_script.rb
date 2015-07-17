@@ -2,8 +2,6 @@ require 'net/http'
 require 'json'
 require_relative 'meats'
 
-SCREEN_WIDTH, SCREEN_HEIGHT = `xrandr`.scan(/current (\d+) x (\d+)/).flatten.map(&:to_i)
-
 def meat_slideshow
   meats_o_the_day = MEATS.split('&')
   puts meats_o_the_day.cycle(99) { |meat| system 'clear'; puts meat; sleep 4 }
